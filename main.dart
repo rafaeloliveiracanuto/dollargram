@@ -27,7 +27,7 @@ String returnPhoneNumber(phone){
         number = "Only between 2 and 9!";
         return number;
       }
-      if(nn == 0 && nn == 1){
+      if(nn == 0 || nn == 1){
         number = "Only between 2 and 9!";
         return number;
       }
