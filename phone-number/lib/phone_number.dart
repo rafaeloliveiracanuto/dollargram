@@ -1,44 +1,44 @@
 class PhoneNumber {
-  String clean(String phone) {
-    String number = phone.replaceAll(RegExp(r'\D'), '');
+  String clean(String number){
 
-    if(number[0] == '1'){
-      number = number.substring(1);
-      if(number.length == 10){
-        var n = int.parse(number[0]);
-        var nn = int.parse(number[3]);
+    RegExp letters = RegExp(r"[a-zA-Z]");
+    RegExp punctuations = RegExp(r"[@:!]");
 
-        if(n == 0 || n == 1){
-          number = "Only between 2 and 9!";
-          return number;
-        }
-        if(nn == 0 || nn == 1){
-          number = "Only between 2 and 9!";
-          return number;
-        }
-      }else{
-        number = "At least ten numbers!";
-      }
-    }else{
-      if(number.length == 10){
-        var n = int.parse(number[0]);
-        var nn = int.parse(number[3]);
+    if(letters.hasMatch(number)){
+      throw FormatException("letters not permitted");
+    }
 
-        if(n == 0 || n == 1){
-          number = "Only between 2 and 9!";
-          return number;
-        }
-        if(nn == 0 || nn == 1){
-          number = "Only between 2 and 9!";
-          return number;
-        }
-      }else{
-        number = "At least ten numbers!";
+    if (punctuations.hasMatch(number)) {
+      throw FormatException("punctuations not permitted");
+    }
+
+    number = number.replaceAll(RegExp(r"\D"), '');
+
+    if (number.length > 11) {
+      throw FormatException("more than 11 digits");
+    }else if (number.length < 10) {
+      throw FormatException("incorrect number of digits");
+    }else if (number.length == 11) {
+      if (number[0] == '1') {
+        number = number.substring(1);
+      }else {
+        throw FormatException("11 digits must start with 1");
       }
     }
-    return number;
+
+    if (number[0] == '0') {
+      throw FormatException("area code cannot start with zero");
+    }else if (number[0] == '1') {
+      throw FormatException("area code cannot start with one");
+    }else if (number[3] == '0') {
+      throw FormatException("exchange code cannot start with zero");
+    }else if (number[3] == '1') {
+      throw FormatException("exchange code cannot start with one");
+    }else {
+      return number;
+    }
     
   }
-
+   
 }
 
